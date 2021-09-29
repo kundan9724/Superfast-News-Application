@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My News</title>
+    <title>Sports</title>
     <style>
       #mynews {
         text-align: center;
@@ -51,38 +51,27 @@
         margin-left: 40px;
         margin-top: 10px;
       }
-      a {
-        text-decoration: none;
-        color: white;
-      }
     </style>
   </head>
   <body>
     <div id="navbar">
-      <div id="sports"><a href="sports.html">Sports</a></div>
-      <div id="science"><a href="science.html">Science</a></div>
-      <div id="entertainment">
-        <a href="entertainment.html">Entertainment</a>
-      </div>
+      <div id="sports">Sports</div>
+      <div id="science">Science</div>
+      <div id="entertainment">Entertainment</div>
     </div>
     <div id="mynews">Superfast News</div>
     <div id="container"></div>
     <script>
-      function getNews() {
+      function getSportNews() {
         let apiKey = "ce3888a43ac04a1da5e29abd091e7fa1";
-        let topic = "Football";
-
-        const url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${apiKey}`;
+        let url = `https://newsapi.org/v2/top-headlines?country=in&category=entertainment&apiKey=${apiKey}`;
         fetch(url)
           .then(function (response) {
             return response.json();
           })
           .then(function (response) {
-            console.log(response.articles);
+            console.log(response);
             displayNews(response.articles);
-          })
-          .catch(function (err) {
-            console.log(err);
           });
       }
       function displayNews(response) {
@@ -91,7 +80,7 @@
         var cards = document.createElement("div");
 
         cards.className = "cards";
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < response.length; i++) {
           var card = document.createElement("div");
           var left = document.createElement("div");
           var right = document.createElement("div");
@@ -107,7 +96,7 @@
         }
         document.body.append(cards);
       }
-      getNews();
+      getSportNews();
     </script>
   </body>
 </html>
