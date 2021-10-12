@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My News</title>
+    <style>
+      #mynews {
+        text-align: center;
+        color: red;
+        margin-bottom: 40px;
+        margin-top: 30px;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        font-size: 45px;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+      }
+      img {
+        height: 200px;
+        width: 100%;
+      }
+      .card {
+        box-shadow: 0px 0px 6px 2px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 5px;
+      }
+      h3 {
+        font-size: 18px;
+        font-family: monospace;
+        color: grey;
+        margin-left: 10px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mynews">Superfast News</div>
+    <div id="container"></div>
+    <script>
+      function getNews() {
+        let apiKey = "ce3888a43ac04a1da5e29abd091e7fa1";
+        let topic = "Football";
+
+        const url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${apiKey}`;
+        fetch(url)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (response) {
+            console.log(response.articles);
+            displayNews(response.articles);
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
+      }
+      function displayNews(response) {
+        var container = document.getElementById("container");
+        container.innerHTML = "";
+        var cards = document.createElement("div");
+
+        cards.className = "cards";
+        for (let i = 0; i < 10; i++) {
+          var card = document.createElement("div");
+          var left = document.createElement("div");
+          var right = document.createElement("div");
+          card.className = "card";
+          var h3 = document.createElement("h3");
+          h3.innerHTML = response[i].title;
+          var img = document.createElement("img");
+          img.src = response[i].urlToImage;
+          left.append(img);
+          right.append(h3);
+          card.append(left, right);
+          cards.append(card);
+        }
+        document.body.append(cards);
+      }
+      getNews();
+    </script>
+  </body>
+</html>
